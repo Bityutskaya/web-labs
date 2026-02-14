@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Список дел - Макет</title>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Playwrite+NZ+Basic:wght@100..400&display=swap" rel="stylesheet">   
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: #325050;
+            font-family: "Playwrite NZ Basic", cursive;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .main-group {
+            width: 80%;
+            max-width: 700px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            max-height: 800px;
+        }
+
+        h1 {
+            font-family: 'Caveat', cursive;
+            color: white;
+            font-size: 60px;
+            margin-bottom: 30px;
+        }
+
+        .input-group {
+            display: flex;
+            margin-bottom: 40px;
+        }
+
+        .input-group input {
+            width: 600px;
+            padding: 15px;
+            border: none;
+        }
+
+        .btn { 
+            padding: 15px;
+            border: none;
+            min-width: 150px;
+        }
+
+        .btn-create {
+            background-color: #d8d8d8;
+        }
+        .btn-clear {
+            background-color: #a43434; 
+            color: #fff;
+        }
+        .btn:hover {
+            filter: brightness(85%); /* затемнение при наведении */
+            transition: 0.2s; 
+        } 
+        
+
+        .todo-list {
+            width: 80%;
+            max-width: 800px;
+            background-color: #ffffff;
+            overflow-y: auto; /* чтоб список крутидся отдельно */
+            text-align: left;
+            align-self: center;
+        }
+
+        .todo-item {
+            display: flex;
+            align-items: center;
+            padding: 10px 015px;
+        }
+
+        
+        .todo-item:hover {
+            filter: brightness(95%);
+            transition: 0.2s; 
+        }
+
+        .todo-item.first {
+            background-color: #878787;
+            color: white;
+        }
+        .todo-item.first .task-text { text-decoration: line-through; }
+        .todo-item.first .date { color: #ffffff; }
+
+        .todo-item.second {
+            background-color: #d8d8d8;
+        }
+
+        .todo-item.third {
+            background-color: #ffffff;
+        }
+
+        .check-mark-icon {
+            font-size: 25px;
+            margin-right: 15px;
+        }
+
+        .task-content {
+            flex-grow: 1; /* распределение места */
+            overflow: hidden; /* чтобы текст не вылазил */
+        }
+
+        .task-text {
+            display: block;
+            font-size: 20px;
+            white-space: nowrap; /* что бы текст был в одну строку */
+            overflow: hidden;
+            text-overflow: ellipsis; /* многоточие */
+        }
+
+        .date {
+            color: #d8d8d8;
+            font-size: 11px;
+            color: #888;
+            display: block;
+        }
+
+        .delete-icon {
+            margin-left: 10px;
+            font-weight: bold;
+            color: #555;
+            transition: color 0.3s;
+        }
+        
+        .todo-item.first .delete-icon { color: white; }
+
+        footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            color: white;
+            text-align: center;
+            padding: 5px;
+        }
+
+        /* кнопки вниз при сужении */
+        @media (max-width: 600px) {
+            .input-group { flex-direction: column; }
+            .btn, .input-group input { width: 100%; }
+            h1 { font-size: 2.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="main-group">
+        <h1>Список дел</h1>
+
+        <div class="input-group">
+            <input type="text" placeholder="Новый элемент списка">
+            <button class="btn btn-create">Создать</button>
+            <button class="btn btn-clear">Очистить всё</button>
+        </div>
+
+        <ul class="todo-list">
+
+            <li class="todo-item first">
+                <span class="check-mark-icon">✔</span>
+                <div class="task-content">
+                    <span class="task-text">Почесать кошку</span>
+                    <span class="date">от 14.08.2023</span>
+                </div>
+                <span class="delete-icon">✕</span>
+            </li>
+
+            <li class="todo-item second">
+                <span class="check-mark-icon" style="visibility: hidden;">✔</span>
+                <div class="task-content">
+                    <span class="task-text">Полить картошку</span>
+                    <span class="date">от 04.05.2022</span>
+                </div>
+                <span class="delete-icon">✕</span>
+            </li>
+
+            <li class="todo-item third">
+                <span class="check-mark-icon" style="visibility: hidden;">✔</span>
+                <div class="task-content">
+                    <span class="task-text">Сложить в лукошко аааааааааааааааааааааааааааааааааааааааааааааааааааааааааа</span>
+                    <span class="date">от 19.05.2022</span>
+                </div>
+                <span class="delete-icon">✕</span>
+            </li>
+        </ul>
+    </div>
+
+    <footer>
+        <hr>
+        Copyright © 2023
+    </footer>
+
+
+
+</body>
+</html>
