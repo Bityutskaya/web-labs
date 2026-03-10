@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Список дел - Макет</title>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Playwrite+NZ+Basic:wght@100..400&display=swap" rel="stylesheet">   
+    <link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+    <header>
+        <h1 class="neon-text"><img src="moon.png" style="width: 50px; height: 50px; ">Список дел</h1>
+    </header>
+    
+    <div class="main-group">
+        <div class="input-group">
+            <input type="text" placeholder="Новый элемент списка">
+            <button class="btn btn-create">Создать</button>
+            <button class="btn btn-clear">Очистить всё</button>
+        </div>
+
+        <div class="todo-list list-container">
+            <div class="empty-message">Не найдено ни одного дела</div>
+            
+            <li class="todo-item">
+                <input type="checkbox">
+                <div class="task-content">
+                    <span class="task-text">Почесать кошку</span>
+                    <span class="date">от 14.08.2023</span>
+                </div>
+                <button class="delete-button">✕</button>
+            </li>
+
+            <li class="todo-item">
+                <input type="checkbox">
+                <div class="task-content">
+                    <span class="task-text">Полить картошку</span>
+                    <span class="date">от 04.05.2022</span>
+                </div>
+                <button class="delete-button">✕</button>
+            </li>
+
+            <li class="todo-item">
+                <input type="checkbox">
+
+                <div class="task-content">
+                    <span class="task-text">Сложить в лукошко аааааааааааааааааааааааааааааааааааааааааааааааааааааааааа</span>
+                    <span class="date">от 19.05.2022</span>
+                </div>
+                <button class="delete-button">✕</button>
+            </li>
+        </div>
+    </div>
+
+    <footer>
+        <hr>
+        Copyright © 2023
+    </footer>
+</body>
+</html>
+

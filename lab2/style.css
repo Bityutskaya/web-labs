@@ -1,0 +1,288 @@
+
+:root {
+  --color-white: #fff;
+  --color-gray-light: #d8d8d8;
+  --color-gray-medium: #888;
+  --color-gray-dark: #555;
+  --color-red: #a43434;
+  --color-green: #0fa;
+  --color-orange: #ff4800;
+  --color-dark-gray: #7a7a7a;
+  --color-hover-bg: #878787;
+  
+  --spacing-xs: 5px;
+  --spacing-sm: 10px;
+  --spacing-md: 15px;
+  --spacing-lg: 20px;
+  --spacing-xl: 30px;
+  --spacing-xxl: 40px;
+  
+  --font-size-xs: 11px;
+  --font-size-sm: 20px;
+  --font-size-md: 24px;
+  --font-size-lg: 60px;
+  
+  --header-height: 80px;
+  --btn-min-width: 120px;
+  --todo-list-height: 200px;
+  --todo-list-max-height: 400px;
+  --checkbox-size: 22px;
+  
+  --animation-duration: 1.5s;
+}
+
+.neon-text {
+  color: var(--color-white);
+  text-shadow: 
+    0 0 5px var(--color-white),
+    0 0 10px var(--color-white),
+    0 0 20px var(--color-green),
+    0 0 40px var(--color-green),
+    0 0 80px var(--color-green);
+  animation: pulsate var(--animation-duration) infinite alternate;
+}
+
+@keyframes pulsate {
+  0% {
+    text-shadow: 
+      0 0 5px var(--color-white),
+      0 0 10px var(--color-white),
+      0 0 20px var(--color-green),
+      0 0 40px var(--color-green),
+      0 0 80px var(--color-green);
+  }
+  100% {
+    text-shadow: 
+      0 0 2px var(--color-white),
+      0 0 5px var(--color-white),
+      0 0 10px var(--color-orange),
+      0 0 20px var(--color-orange),
+      0 0 40px var(--color-orange);
+  }
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Playwrite NZ Basic", cursive;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: url('backrgound.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+  margin: 0;
+}
+
+.main-group {
+  width: 80%;
+  max-width: 700px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  max-height: 800px;
+  margin-top: 80px;
+  margin-bottom: 40px;
+}
+
+h1 {
+  font-family: 'Caveat', cursive;
+  color: var(--color-white);
+  font-size: var(--font-size-lg);
+  margin-bottom: var(--spacing-xl);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+h1 img {
+  width: 50px;
+  height: 50px;
+}
+
+header {
+  position: fixed;
+  top: 0;
+  height: var(--header-height);
+  width: 100%;
+  text-align: center;
+}
+
+footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  color: var(--color-white);
+  text-align: center;
+  padding: var(--spacing-xs);
+}
+
+.input-group {
+  display: flex;
+  margin-bottom: var(--spacing-xxl);
+}
+
+.input-group input {
+  flex: 1;
+  padding: var(--spacing-md);
+  border: none;
+}
+
+.btn {
+  padding: var(--spacing-md) var(--spacing-lg);
+  border: none;
+  min-width: var(--btn-min-width);
+  cursor: pointer;
+}
+
+.btn:hover {
+  filter: brightness(85%);
+  transition: 0.2s;
+}
+
+.btn-create {
+  background-color: var(--color-gray-light);
+}
+
+.btn-clear {
+  background-color: var(--color-red);
+  color: white;
+}
+
+.todo-list {
+  width: 80%;
+  max-width: 800px;
+  background-color: var(--color-white);
+  overflow-y: auto;
+  text-align: left;
+  align-self: center;
+  min-height: var(--todo-list-height);
+  max-height: var(--todo-list-max-height);
+  height: var(--todo-list-height);
+  /* position: relative; */
+  list-style: none;
+  padding: 0;
+}
+
+.empty-message {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--todo-list-height);
+  font-size: var(--font-size-md);
+  color: var(--color-gray-medium);
+  font-family: 'Playwrite NZ Basic', cursive;
+  background-color: var(--color-white);
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 5;
+}
+
+.todo-list:has(li) .empty-message {
+  display: none;
+}
+
+.todo-item {
+  display: flex;
+  align-items: center;
+  padding: var(--spacing-sm) var(--spacing-md);
+  list-style: none;
+}
+
+.todo-item:hover {
+  background-color: var(--color-gray-light);
+  transition: 0.2s;
+}
+
+.todo-item input[type="checkbox"] {
+  width: var(--checkbox-size);
+  height: var(--checkbox-size);
+  margin-right: var(--spacing-md);
+  cursor: pointer;
+  accent-color: var(--color-dark-gray);
+  flex-shrink: 0;
+}
+
+.todo-item:has(input[type="checkbox"]:checked) {
+  background-color: var(--color-hover-bg);
+  color: var(--color-white);
+}
+
+.todo-item:has(input[type="checkbox"]:checked) .task-text {
+  text-decoration: line-through;
+}
+
+.todo-item:has(input[type="checkbox"]:checked) .date {
+  color: var(--color-white);
+}
+
+.task-content {
+  flex-grow: 1;
+  overflow: hidden;
+}
+
+.task-text {
+  display: block;
+  font-size: var(--font-size-sm);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.date {
+  font-size: var(--font-size-xs);
+  color: var(--color-gray-medium);
+  display: block;
+}
+
+.delete-button {
+  margin-left: var(--spacing-sm);
+  font-weight: bold;
+  color: var(--color-gray-dark);
+  background: none;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  padding: 0 5px;
+}
+
+.delete-button:hover {
+  color: var(--color-red);
+}
+
+hr {
+  border: none;
+  border-top: 1px solid rgba(255,255,255,0.3);
+  margin-bottom: 5px;
+}
+
+@media (max-width: 700px) {
+  .input-group {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .input-group input {
+    flex: 1 1 100%;
+    margin-bottom: var(--spacing-xs);
+  }
+  
+  .btn {
+    flex: 0 1 auto;
+    min-width: var(--btn-min-width);
+  }
+  
+  h1 {
+    font-size: 2.5rem;
+  }
+}
