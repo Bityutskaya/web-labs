@@ -1,0 +1,186 @@
+Задача 1============================
+============================
+Вернуть число в обратном порядке 123 -> 321.
+============================
+
+function reverseNumber(num) {
+    let str = String(num);
+    let result = "";
+    
+    for (let i = str.length - 1; i >= 0; i--) {
+        result = result + str[i];
+    }
+
+    return Number(result);
+}
+
+console.log(reverseNumber(123));
+
+============================
+Вернуть число без повторяющихся цифр 111333456 -> 13456.
+============================
+
+function removeDuplicates(num) {
+    let str = String(num);
+    let result = "";
+    
+    for (let i = 0; i < str.length; i++) {
+        let currentDigit = str[i];
+        
+        let alreadyHas = false;
+        for (let j = 0; j < result.length; j++) {
+            if (result[j] === currentDigit) {
+                alreadyHas = true;
+                break;
+            }
+        }
+        
+        if (alreadyHas === false) {
+            result = result + currentDigit;
+        }
+    }
+    
+    return Number(result);
+}
+
+console.log(removeDuplicates(111333456)); // 13456
+
+============================
+Посчитать, сколько раз в данном числе встречается данная цифра (1355567, 5) -> 3.
+============================
+
+function countDigit(number, digit) {
+    let numStr = String(number);
+    let digitStr = String(digit);
+    let counter = 0;
+    
+    // Считаем, сколько раз встречается цифра
+    for (let i = 0; i < numStr.length; i++) {
+        if (numStr[i] === digitStr) {
+            counter = counter + 1;
+        }
+    }
+    
+    return counter;
+}
+
+console.log(countDigit(1355567, 5));
+
+============================
+Посчитать самую длинную последовательность нулей/единиц в двоичной записи данного числа.
+============================
+
+let num = prompt("Введите число:");
+
+let binary = "";
+let temp = num;
+
+while (temp > 0) {
+    binary = (temp % 2) + binary;
+    temp = Math.floor(temp / 2);
+}
+
+console.log("Двоичная запись: " + binary);
+
+let maxZeros = 0;
+let currentZeros = 0;
+
+for (let i = 0; i < binary.length; i++) {
+    if (binary[i] === "0") {
+        currentZeros = currentZeros + 1;
+        if (currentZeros > maxZeros) {
+            maxZeros = currentZeros;
+        }
+    } else {
+        currentZeros = 0;
+    }
+}
+
+let maxOnes = 0;
+let currentOnes = 0;
+
+for (let i = 0; i < binary.length; i++) {
+    if (binary[i] === "1") {
+        currentOnes = currentOnes + 1;
+        if (currentOnes > maxOnes) {
+            maxOnes = currentOnes;
+        }
+    } else {
+        currentOnes = 0;
+    }
+}
+
+console.log("Нулей подряд" + maxZeros);
+console.log("Единиц подряд " + maxOnes);
+
+Задача 2============================
+============================
+Найти самый первый неповторяющийся символ в строке: 'фывфавыапрс' -> 'п'.
+============================
+function firstUniqueChar(str) {
+    for (let i = 0; i < str.length; i++) {
+        let currentChar = str[i];
+        let count = 0;
+        
+        for (let j = 0; j < str.length; j++) {
+            if (str[j] === currentChar) {
+                count = count + 1;
+            }
+        }
+        
+        if (count === 1) {
+            return currentChar;
+        }
+    }
+    
+    return "Нет уникальных символов";
+}
+
+console.log(firstUniqueChar('фывфавыапрс'));
+============================
+Cгенерировать строку заданной длины из случайных символов, взятых из набора английскийх букв и цифр: (5) -> '2fvg6'.
+============================
+function generateRandomString(length) {
+    let letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    let lettersLower = "abcdefghijklmnopqrstuvwxyz";
+    let digits = "0123456789";
+    let allSymbols = letters + lettersLower + digits;
+    
+    let result = "";
+    
+    for (let i = 0; i < length; i++) {
+        let randomIndex = Math.floor(Math.random() * allSymbols.length);
+        result = result + allSymbols[randomIndex];
+    }
+    
+    return result;
+}
+
+console.log(generateRandomString(5));
+
+============================
+Вернуть только уникальные символы строки: 'позволяеткопироватьтекстиз' -> 'позвляеткираьс'.
+============================
+function getUniqueChars(str) {
+    let result = "";
+    
+    for (let i = 0; i < str.length; i++) {
+        let currentChar = str[i];
+        let alreadyInResult = false;
+        
+        for (let j = 0; j < result.length; j++) {
+            if (result[j] === currentChar) {
+                alreadyInResult = true;
+                break;
+            }
+        }
+        
+        if (alreadyInResult === false) {
+            result = result + currentChar;
+        }
+    }
+    
+    return result;
+}
+
+console.log(getUniqueChars('позволяеткопироватьтекстиз'));
