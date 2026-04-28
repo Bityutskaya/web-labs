@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>JavaScript задания</title>
+    <style>
+        body{
+            background-color: rgb(235, 179, 205);
+            color: rgb(173, 0, 95);
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Задание 1. Работа с переменными</h1>
+    <button onclick="task1()">Выполнить</button>
+    <div id="task1-output"></div>
+
+    <h1>Задание 2. Исправьте сложение</h1>
+    <button onclick="task2()">Выполнить</button>
+    <div id="task2-output"></div>
+
+    <h1>Задание 3. Выведите чётные числа</h1>
+    <button onclick="task3()">Выполнить</button>
+    <div id="task3-output"></div>
+
+    <h1>Задание 4. Замените for на while</h1>
+    <button onclick="task4()">Выполнить</button>
+    <div id="task4-output"></div>
+
+    <h1>Задание 5. Повторять цикл, пока ввод неверен</h1>
+    <button onclick="task5()">Выполнить</button>
+    <div id="task5-output"></div>
+
+    <h1>Задание 6. Простые числа</h1>
+    <label>Введите n: <input type="number" id="n-value" value="10" min="2"></label>
+    <button onclick="task6()">Выполнить</button>
+    <div id="task6-output"></div>
+
+    <script>
+        function task1() {
+            let admin;
+            let name = "Джон";
+            admin = name;
+            alert(admin);
+            document.getElementById('task1-output').innerHTML = 'Результат: admin = ' + admin;
+        }
+
+        function task2() {
+            let a = Number(prompt("Первое число?", 1));
+            let b = Number(prompt("Второе число?", 2));
+            alert(a + b);
+            document.getElementById('task2-output').innerHTML = 'Результат: ' + a + ' + ' + b + ' = ' + (a + b);
+        }
+
+        function task3() {
+            let result = '';
+            for (let i = 2; i <= 10; i++) {
+                if (i % 2 === 0) {
+                    result += i + ' ';
+                }
+            }
+            alert(result);
+            document.getElementById('task3-output').innerHTML = 'Чётные числа от 2 до 10: ' + result;
+        }
+
+        function task4() {
+            let i = 0;
+            let result = '';
+            while (i < 3) {
+                alert(`number ${i}!`);
+                result += `number ${i}! `;
+                i++;
+            }
+            document.getElementById('task4-output').innerHTML = 'Результат: ' + result;
+        }
+
+        function task5() {
+            let num;
+            while (true) {
+                num = prompt("Введите число больше 100:", "");
+                if (num === null) {
+                    alert("Вы нажали Отмена");
+                    break;
+                }
+                num = Number(num);
+                if (num > 100) {
+                    alert("Верно! Вы ввели: " + num);
+                    break;
+                } else {у
+                    alert("Ошибка! Попробйте ещё раз.");
+                }
+            }
+            document.getElementById('task5-output').innerHTML = 'Цикл завершён';
+        }
+
+        function task6() {
+            let n = Number(document.getElementById('n-value').value);
+            let primes = [];
+            
+            for (let i = 2; i <= n; i++) {
+                let isPrime = true;
+                for (let j = 2; j <= Math.sqrt(i); j++) {
+                    if (i % j === 0) {
+                        isPrime = false;
+                        break;
+                    }
+                }
+                if (isPrime) {
+                    primes.push(i);
+                }
+            }
+            
+            alert(primes.join(', '));
+            document.getElementById('task6-output').innerHTML = 'Простые числа от 2 до ' + n + ': ' + primes.join(', ');
+        }
+    </script>
+</body>
+</html>

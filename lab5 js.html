@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Задачи по работе с числами и строками</title>
+    <style>
+        body{
+            background-color: rgb(235, 179, 205);
+            color: rgb(173, 0, 95);
+        }
+    </style>
+</head>
+<body>
+    <h1>Задача 1. Работа с числами</h1>
+    
+    <h3>1.1 Вернуть число в обратном порядке</h3>
+    <label>Введите число: <input type="number" id="reverse-number" value="123"></label>
+    <button onclick="reverseNumber()">Выполнить</button>
+    <div id="reverse-output"></div>
+
+    <h3>1.2 Вернуть число без повторяющихся цифр</h3>
+    <label>Введите число: <input type="number" id="unique-digits-number" value="111333456"></label>
+    <button onclick="removeDuplicateDigits()">Выполнить</button>
+    <div id="unique-digits-output"></div>
+
+    <h3>1.3 Посчитать, сколько раз встречается цифра</h3>
+    <label>Введите число: <input type="number" id="count-number" value="1355567"></label><br>
+    <label>Введите цифру: <input type="number" id="digit-to-count" value="5" min="0" max="9"></label>
+    <button onclick="countDigit()">Выполнить</button>
+    <div id="count-digit-output"></div>
+
+    <h3>1.4 Самая длинная последовательность нулей/единиц в двоичной записи</h3>
+    <label>Введите число: <input type="number" id="binary-number" value="123"></label>
+    <button onclick="longestBinarySequence()">Выполнить</button>
+    <div id="binary-output"></div>
+
+    <h1>Задача 2. Работа со строками</h1>
+
+    <h3>2.1 Найти первый неповторяющийся символ</h3>
+    <label>Введите строку: <input type="text" id="first-unique-string" value="фывфавыапрс" size="30"></label>
+    <button onclick="firstUniqueChar()">Выполнить</button>
+    <div id="first-unique-output"></div>
+
+    <h3>2.2 Сгенерировать строку из случайных символов</h3>
+    <label>Длина строки: <input type="number" id="random-length" value="5" min="1"></label>
+    <button onclick="generateRandomString()">Выполнить</button>
+    <div id="random-output"></div>
+
+    <h3>2.3 Вернуть только уникальные символы строки</h3>
+    <label>Введите строку: <input type="text" id="unique-chars-string" value="позволяеткопироватьтекстиз" size="40"></label>
+    <button onclick="getUniqueChars()">Выполнить</button>
+    <div id="unique-chars-output"></div>
+
+    <script>
+        // 1.1
+        function reverseNumber() {
+            let num = document.getElementById('reverse-number').value;
+            let reversed = num.split('').reverse().join('');    // разбиваем, переворачиваем, склеиваем
+            let result = parseInt(reversed);                    // убираем ведущие нули
+            document.getElementById('reverse-output').innerHTML = 
+                `Исходное число: ${num}<br>Результат: ${result}`;
+        }
+
+        // 1.2
+        function removeDuplicateDigits() {
+            let num = document.getElementById('unique-digits-number').value;
+            let seen = {};          // объект для отслеживания встреченных цифр
+            let result = '';
+            
+            for (let i = 0; i < num.length; i++) {
+                let digit = num[i];
+                if (!seen[digit]) { // если цифра еще не встречалась
+                    seen[digit] = true; // отмечаем как встреченную
+                    result += digit;
+                }
+            }
+            
+            document.getElementById('unique-digits-output').innerHTML = 
+                `Исходное число: ${num}<br>Результат: ${parseInt(result)}`;
+        }
+
+        // 1.3
+        function countDigit() {
+            let num = document.getElementById('count-number').value;
+            let digit = document.getElementById('digit-to-count').value;
+            let count = 0;
+            
+            for (let i = 0; i < num.length; i++) {
+                if (num[i] === digit) count++; // сравниваем каждый символ с искомой цифрой
+            }
+            
+            document.getElementById('count-digit-output').innerHTML = 
+                `Число: ${num}<br>Цифра: ${digit}<br>Встречается: ${count} раз(а)`;
+        }
+
+        // 1.4
+        function longestBinarySequence() {
+            let num = parseInt(document.getElementById('binary-number').value);
+            let binary = num.toString(2);           // переводим в двоичную систему
+            
+            let maxZeros = 0, maxOnes = 0;          // максимальные последовательности
+            let currentZeros = 0, currentOnes = 0;
+            
+            for (let i = 0; i < binary.length; i++) {
+                if (binary[i] === '0') {
+                    currentZeros++;               
+                    currentOnes = 0;     
+                    maxZeros = Math.max(maxZeros, currentZeros);
+                } else {
+                    currentOnes++;
+                    currentZeros = 0;
+                    maxOnes = Math.max(maxOnes, currentOnes);
+                }
+            }
+            
+            document.getElementById('binary-output').innerHTML = 
+                `Число: ${num}<br>Двоичная запись: ${binary}<br>` +
+                `Самая длинная последовательность нулей: ${maxZeros}<br>` +
+                `Самая длинная последовательность единиц: ${maxOnes}`;
+        }
+
+        // 2.1
+        function firstUniqueChar() {
+            let str = document.getElementById('first-unique-string').value;
+            let charCount = {};
+            
+            for (let i = 0; i < str.length; i++) { // считаем количество каждого символа
+                let char = str[i];
+                charCount[char] = (charCount[char] || 0) + 1;
+            }
+            
+            let result = null;
+            for (let i = 0; i < str.length; i++) { // ищем первый с количеством 1
+                if (charCount[str[i]] === 1) {
+                    result = str[i];
+                    break;
+                }
+            }
+            
+            document.getElementById('first-unique-output').innerHTML = 
+                `Исходная строка: "${str}"<br>` +
+                `Первый неповторяющийся символ: "${result || 'не найден'}"`;
+        }
+
+        // 2.2
+        function generateRandomString() {
+            let length = parseInt(document.getElementById('random-length').value);
+            let chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+            let result = '';
+            
+            for (let i = 0; i < length; i++) {
+                let randomIndex = Math.floor(Math.random() * chars.length); // случайный индекс от 0 до длины строки
+                result += chars[randomIndex];
+            }
+            
+            document.getElementById('random-output').innerHTML = 
+                `Длина: ${length}<br>Сгенерированная строка: "${result}"`;
+        }
+
+        // 2.3
+        function getUniqueChars() {
+            let str = document.getElementById('unique-chars-string').value;
+            let seen = {}; // объект для отслеживания встреченных символов
+            let result = '';
+            
+            for (let i = 0; i < str.length; i++) {
+                let char = str[i];
+                if (!seen[char]) { // если символ еще не встречался
+                    seen[char] = true;
+                    result += char;
+                }
+            }
+            
+            document.getElementById('unique-chars-output').innerHTML = 
+                `Исходная строка: "${str}"<br>` +
+                `Только уникальные символы: "${result}"`;
+        }
+    </script>
+</body>
+</html>
