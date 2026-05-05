@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Лабораторная: Генераторы, Map, Set, BigInt</title>
+    <style>
+        body {
+           background-color: rgb(235, 179, 205);
+            color: rgb(173, 0, 95);
+        }
+    </style>
+</head>
+<body>
+    <h1>Задача 1. Генераторы</h1>
+    
+    <h3>1.1 Генератор случайных чисел в диапазоне [n, m]</h3>
+    <label>Диапазон от: <input type="number" id="random-min" value="1"></label>
+    <label>до: <input type="number" id="random-max" value="100"></label>
+    <button onclick="testRandomGenerator()">Сгенерировать 10 чисел</button>
+    <div id="random-output"></div>
+
+    <h3>1.2 Генератор последовательности Падована</h3>
+    <button onclick="testPadovanGenerator()">Сгенерировать 15 чисел</button>
+    <div id="padovan-output"></div>
+
+    <h3>1.3 Генератор простых чисел</h3>
+    <button onclick="testPrimeGenerator()">Сгенерировать 20 простых чисел</button>
+    <div id="prime-output"></div>
+
+    <h1>Задача 2. Map и BigInt</h1>
+
+    <h3>2.1 Подсчёт вхождений букв в строке (используя Map)</h3>
+    <label>Введите строку: <input type="text" id="count-string" value="hello world hello" size="40"></label>
+    <button onclick="countLetters()">Подсчитать буквы</button>
+    <div id="letter-count-output"></div>
+
+    <h3>2.2 Нахождение n-го простого числа (с использованием BigInt)</h3>
+    <label>Введите n: <input type="number" id="prime-n" value="10" min="1"></label>
+    <button onclick="getNthPrime()">Выполнить</button>
+    <div id="nth-prime-output"></div>
+
+    <script>
+        // 1.1 Генератор случайных чисел
+        function* randomGenerator(n, m) {
+            while (true) {
+                yield Math.floor(Math.random() * (m - n + 1)) + n;
+            }
+        }
+
+        function testRandomGenerator() {
+            let min = parseInt(document.getElementById('random-min').value);
+            let max = parseInt(document.getElementById('random-max').value);
+            
+            if (min > max) {
+                document.getElementById('random-output').innerHTML = 
+                    'Ошибка: минимальное значение не может быть больше максимального';
+                return;
+            }
+            
+            let gen = randomGenerator(min, max);
+            let numbers = [];
+            for (let i = 0; i < 10; i++) {
+                numbers.push(gen.next().value);
+            }
+            
+            document.getElementById('random-output').innerHTML = 
+                `Диапазон: [${min}, ${max}]<br>10 случайных чисел: ${numbers.join(', ')}`;
+        }
+
+        // 1.2 Генератор последовательности Падована
+        function* padovanGenerator() {
+            let p0 = 1n, p1 = 1n, p2 = 1n;
+            yield p0;
+            yield p1;
+            yield p2;
+            
+            while (true) {
+                let next = p0 + p1;
+                yield next;
+                p0 = p1;
+                p1 = p2;
+                p2 = next;
+            }
+        }
+
+        function testPadovanGenerator() {
+            let gen = padovanGenerator();
+            let numbers = [];
+            for (let i = 0; i < 15; i++) {
+                numbers.push(gen.next().value);
+            }
+            
+            document.getElementById('padovan-output').innerHTML = 
+                `Первые 15 чисел Падована:<br>${numbers.join(', ')}<br><br>`;
+        }
+
+        // 1.3 Генератор простых чисел
+        function* primeGenerator() {
+            yield 2n;
+            let num = 3n;
+            
+            while (true) {
+                let isPrime = true;
+                for (let i = 2n; i * i <= num; i++) { //проверка делителей до корня числа
+                    if (num % i === 0n) {
+                        isPrime = false;
+                        break;
+                    }
+                }
+                if (isPrime) {
+                    yield num;
+                }
+                num += 2n;
+            }
+        }
+
+        function testPrimeGenerator() {
+            let gen = primeGenerator();
+            let primes = [];
+            for (let i = 0; i < 20; i++) {
+                primes.push(gen.next().value);
+            }
+            
+            document.getElementById('prime-output').innerHTML = 
+                `Первые 20 простых чисел:<br>${primes.join(', ')}`;
+        }
+
+        // 2.1 Подсчёт вхождений букв с использованием Map
+        function countLetters() {
+            let str = document.getElementById('count-string').value;
+            let letterMap = new Map();
+            
+            let cleanStr = str.toLowerCase().replace(/[^a-zа-яё]/g, '');
+            
+            for (let char of cleanStr) {
+                if (letterMap.has(char)) {
+                    letterMap.set(char, letterMap.get(char) + 1);
+                } else {
+                    letterMap.set(char, 1);
+                }
+            }
+            
+            let sorted = [...letterMap.entries()].sort(); // сортировка по алфавиту
+            
+            let output = `<strong>Исходная строка:</strong> "${str}"<br><br>`;
+            output += `<strong>Подсчёт букв:</strong><br>`;
+            for (let [letter, count] of sorted) {
+                output += `"${letter}": ${count} раз(а)<br>`;
+            }
+            output += `<br><strong>Всего уникальных букв:</strong> ${letterMap.size}`;
+            
+            document.getElementById('letter-count-output').innerHTML = output;
+        }
+
+
+        // 2.2 Нахождение n-го простого числа с использованием BigInt
+        function getNthPrime() {
+        let n = parseInt(document.getElementById('prime-n').value);
+        
+        if (n < 1) {
+            document.getElementById('nth-prime-output').innerHTML = 
+                'Ошибка: n должно быть больше 0';
+            return;
+        }
+        
+        let primes = [];
+        let candidate = 2n;
+        
+        while (primes.length < n) {
+            let isPrime = true;
+            for (let i = 2n; i * i <= candidate; i++) {
+                if (candidate % i === 0n) {
+                    isPrime = false;
+                    break;
+                }
+            }
+            if (isPrime) {
+                primes.push(candidate);
+            }
+            candidate++;
+        }
+        
+        let result = primes[primes.length - 1];
+        let output = `<strong>${n}-е простое число:</strong> ${result}<br>`;
+        output += `<strong>Тип данных:</strong> ${typeof result} (BigInt)<br>`;
+        output += `<strong>Все найденные простые числа:</strong> ${primes.join(', ')}`;
+        
+        document.getElementById('nth-prime-output').innerHTML = output;
+    }
+    </script>
+
+</head>
+</html>

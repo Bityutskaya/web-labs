@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Задачи по работе с массивами</title>
+    <style>
+        body {
+           background-color: rgb(235, 179, 205);
+            color: rgb(173, 0, 95);
+        }
+    </style>
+</head>
+<body>
+    <h1>Задача 1. Работа с массивами и объектами</h1>
+    
+    <h3>1.1 Найти максимальную разницу между элементами массива</h3>
+    <label>Введите массив чисел (через запятую): <input type="text" id="max-diff-array" value="1, 5, 3, 9, 2" size="40"></label>
+    <button onclick="maxDifference()">Выполнить</button>
+    <div id="max-diff-output"></div>
+
+    <h3>1.2 Вернуть массив без повторяющихся элементов</h3>
+    <label>Введите массив чисел (через запятую): <input type="text" id="unique-array" value="1, 2, 2, 3, 4, 4, 5" size="40"></label>
+    <button onclick="removeDuplicates()">Выполнить</button>
+    <div id="unique-array-output"></div>
+
+    <h3>1.3 Отфильтровать объекты с isDone: true</h3>
+    <label>Массив объектов (формат JSON):</label><br>
+    <textarea id="objects-array" rows="4" cols="60">[
+    {"id": 1, "isDone": true},
+    {"id": 2, "isDone": false},
+    {"id": 3, "isDone": true}
+]</textarea><br>
+    <button onclick="filterDone()">Выполнить</button>
+    <div id="filter-done-output"></div>
+
+    <h1>Задача 2. Фильтрация и flatten</h1>
+
+    <h3>2.1 Найти элементы массива, которые больше указанного числа</h3>
+    <label>Введите массив чисел (через запятую): <input type="text" id="filter-array" value="1, 4, 6, 3, 2" size="40"></label><br>
+    <label>Введите число: <input type="number" id="threshold" value="2"></label>
+    <button onclick="filterGreater()">Выполнить</button>
+    <div id="filter-greater-output"></div>
+
+    <h3>2.2 Преобразовать многомерный массив в плоский</h3>
+    <label>Введите многомерный массив (формат JSON):</label><br>
+    <textarea id="nested-array" rows="4" cols="60">[1, 4, [34, 1, 20], [6, [6, 12, 8], 6]]</textarea><br>
+    <button onclick="flattenArray()">Выполнить</button>
+    <div id="flatten-output"></div>
+
+    <h1>Задача 3. Поиск пар и троек, дающих в сумме 0</h1>
+
+    <h3>3.1 Найти количество пар чисел, дающих в сумме 0</h3>
+    <label>Введите массив чисел (через запятую): <input type="text" id="pairs-array" value="-7, 12, 4, 6, -4, -12, 0" size="50"></label>
+    <button onclick="countZeroPairs()">Выполнить</button>
+    <div id="pairs-output"></div>
+
+    <h3>3.2 Найти количество троек чисел, дающих в сумме 0</h3>
+    <label>Введите массив чисел (через запятую): <input type="text" id="triplets-array" value="-1, 0, 1, 2, -1, -4" size="50"></label>
+    <button onclick="countZeroTriplets()">Выполнить</button>
+    <div id="triplets-output"></div>
+
+    <script>
+        // 1.1 Максимальная разница между элементами массива
+        function maxDifference() {
+            let input = document.getElementById('max-diff-array').value;
+            let arr = input.split(',').map(x => parseFloat(x.trim())).filter(x => !isNaN(x));
+            
+            if (arr.length < 2) {
+                document.getElementById('max-diff-output').innerHTML = 
+                    `Массив: [${arr}]<br>Ошибка: нужно минимум 2 элемента`;
+                return;
+            }
+            
+            let min = Math.min(...arr);
+            let max = Math.max(...arr);
+            let diff = max - min;
+            
+            document.getElementById('max-diff-output').innerHTML = 
+                `Массив: [${arr}]<br>Минимальный элемент: ${min}<br>Максимальный элемент: ${max}<br>` +
+                `Максимальная разница: ${diff}`;
+        }
+
+        // 1.2 Убрать повторяющиеся элементы
+        function removeDuplicates() {
+            let input = document.getElementById('unique-array').value;
+            let arr = input.split(',').map(x => parseFloat(x.trim())).filter(x => !isNaN(x));
+            
+            let unique = [...new Set(arr)];
+            
+            document.getElementById('unique-array-output').innerHTML = 
+                `Исходный массив: [${arr}]<br>Массив без повторений: [${unique}]`;
+        }
+
+        // 1.3 Фильтр объектов с isDone: true
+        function filterDone() {
+            let input = document.getElementById('objects-array').value;
+            try {
+                let arr = JSON.parse(input);
+                let filtered = arr.filter(obj => obj.isDone === true);
+                
+                document.getElementById('filter-done-output').innerHTML = 
+                    `Исходный массив: ${JSON.stringify(arr)}<br>` +
+                    `Отфильтрованные объекты (isDone: true): ${JSON.stringify(filtered)}`;
+            } catch (e) {
+                document.getElementById('filter-done-output').innerHTML = 
+                    `Ошибка: неверный формат JSON. Используйте формат: [{"id":1,"isDone":true}, ...]`;
+            }
+        }
+
+        // 2.1 Элементы больше указанного числа
+        function filterGreater() {
+            let input = document.getElementById('filter-array').value;
+            let arr = input.split(',').map(x => parseFloat(x.trim())).filter(x => !isNaN(x));
+            let threshold = parseFloat(document.getElementById('threshold').value);
+            
+            let filtered = arr.filter(x => x > threshold);
+            
+            document.getElementById('filter-greater-output').innerHTML = 
+                `Исходный массив: [${arr}]<br>Число: ${threshold}<br>` +
+                `Элементы больше ${threshold}: [${filtered}]`;
+        }
+
+        // 2.2 Преобразование в плоский массив
+        function flattenArray() {
+            let input = document.getElementById('nested-array').value;
+            try {
+                let arr = JSON.parse(input);
+                
+                function flatten(arr) {
+                    let result = [];
+                    for (let i = 0; i < arr.length; i++) {
+                        if (Array.isArray(arr[i])) {
+                            result = result.concat(flatten(arr[i]));
+                        } else {
+                            result.push(arr[i]);
+                        }
+                    }
+                    return result;
+                }
+                
+                let flat = flatten(arr);
+                
+                document.getElementById('flatten-output').innerHTML = 
+                    `Исходный массив: ${JSON.stringify(arr)}<br>` +
+                    `Плоский массив: [${flat}]`;
+            } catch (e) {
+                document.getElementById('flatten-output').innerHTML = 
+                    `Ошибка: неверный формат JSON. Используйте формат: [1, 4, [34, 1, 20], ...]`;
+            }
+        }
+
+        // 3.1 Количество пар, дающих в сумме 0
+        function countZeroPairs() {
+            let input = document.getElementById('pairs-array').value;
+            let arr = input.split(',').map(x => parseFloat(x.trim())).filter(x => !isNaN(x));
+            
+            let count = 0;
+            let used = new Array(arr.length).fill(false); //флажочки использовано ли в паре
+            
+            for (let i = 0; i < arr.length; i++) {
+                if (used[i]) continue;
+                for (let j = i + 1; j < arr.length; j++) {
+                    if (used[j]) continue;
+                    if (arr[i] + arr[j] === 0) {
+                        count++;
+                        used[i] = true;
+                        used[j] = true;
+                        break;
+                    }
+                }
+            }
+            
+            document.getElementById('pairs-output').innerHTML = 
+                `Массив: [${arr}]<br>Количество пар, дающих в сумме 0: ${count}<br>`;
+        }
+
+        // 3.2 Количество троек, дающих в сумме 0
+        function countZeroTriplets() {
+        let input = document.getElementById('triplets-array').value;
+        let arr = input.split(',').map(x => parseFloat(x.trim())).filter(x => !isNaN(x));
+        
+        let count = 0;
+        let used = new Array(arr.length).fill(false);
+        
+        for (let i = 0; i < arr.length; i++) {
+            if (used[i]) continue;
+            for (let j = i + 1; j < arr.length; j++) {
+                if (used[j]) continue;
+                for (let k = j + 1; k < arr.length; k++) {
+                    if (used[k]) continue;
+                    if (arr[i] + arr[j] + arr[k] === 0) {
+                        count++;
+                        used[i] = true;
+                        used[j] = true;
+                        used[k] = true;
+                        break;
+                    }
+                }
+                if (used[j]) break;
+            }
+            if (used[i]) continue;
+        }
+        
+        document.getElementById('triplets-output').innerHTML = 
+            `Массив: [${arr}]<br>Количество троек, дающих в сумме 0: ${count}`;
+        }
+    </script>
+
+    
+</body>
+</html>
